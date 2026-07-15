@@ -107,6 +107,12 @@ Frontend Repository:
 
 https://github.com/Aayushi-jain22/plate-frontend
 
+## Live URLs
+
+Frontend Live URL: https://zesty-sable-70f48c.netlify.app/
+
+Backend URL:  https://plate-backend-production.up.railway.app/
+
 ## Author
 
 Aayushi Jain
