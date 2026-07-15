@@ -1,0 +1,701 @@
+/* ---------------------------------------------------------
+   Design tokens
+   Palette: paper background, deep forest (leaf/vegetable),
+   amber (energy/calories), rust (over-goal alert).
+   Display numbers set in Archivo Black to echo a nutrition
+   facts label; body in Inter; small labels in IBM Plex Mono.
+--------------------------------------------------------- */
+:root {
+  --bg: #faf9f5;
+  --surface: #ffffff;
+  --ink: #1c1c1a;
+  --ink-soft: #4a4a44;
+  --muted: #8a887f;
+  --line: #111111;
+  --line-soft: #d8d5cb;
+  --forest: #26433a;
+  --forest-soft: #e4ece8;
+  --amber: #e2a33d;
+  --rust: #c4432b;
+  --rust-soft: #f7e4df;
+
+  --font-display: 'Archivo Black', 'Arial Black', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  --radius: 6px;
+  --shadow: 0 1px 2px rgba(17, 17, 17, 0.06), 0 4px 16px rgba(17, 17, 17, 0.04);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+  font-size: 14px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--forest);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ---------------------------------------------------------
+   Layout
+--------------------------------------------------------- */
+.app-shell {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
+
+.app-header {
+  margin-bottom: 28px;
+}
+
+.app-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.app-header h1 {
+  font-family: var(--font-display);
+  font-size: 40px;
+  margin: 4px 0 6px;
+  color: var(--forest);
+  letter-spacing: -0.01em;
+}
+
+.app-subtitle {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 15px;
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 20px;
+}
+
+.app-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.app-col-full {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 860px) {
+  .app-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------------------------------------------------------
+   Card base
+--------------------------------------------------------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--forest);
+}
+
+.card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.card-title-row .card-title {
+  margin-bottom: 0;
+}
+
+.meal-count-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------
+   Forms
+--------------------------------------------------------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+
+.field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.field input,
+.field select {
+  padding: 9px 10px;
+  border: 1px solid var(--line-soft);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.field input:disabled,
+.field select:disabled {
+  opacity: 0.6;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field-error {
+  font-size: 12px;
+  color: var(--rust);
+}
+
+.tag-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag-toggle {
+  border: 1px solid var(--line-soft);
+  background: var(--surface);
+  color: var(--ink-soft);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.tag-toggle.active {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: #fff;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 11px;
+  background: var(--forest);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--line-soft);
+  color: var(--ink-soft);
+  padding: 7px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn-ghost:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.banner {
+  padding: 8px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+.banner-success {
+  background: var(--forest-soft);
+  color: var(--forest);
+}
+
+.banner-error {
+  background: var(--rust-soft);
+  color: var(--rust);
+}
+
+/* ---------------------------------------------------------
+   Filters
+--------------------------------------------------------- */
+.filters-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.filters-row .field {
+  margin-bottom: 0;
+  min-width: 140px;
+}
+
+.field-grow {
+  flex: 1;
+}
+
+/* ---------------------------------------------------------
+   States
+--------------------------------------------------------- */
+.state-message {
+  padding: 20px 8px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.state-error {
+  color: var(--rust);
+}
+
+.state-empty {
+  font-style: italic;
+}
+
+/* ---------------------------------------------------------
+   Meal list
+--------------------------------------------------------- */
+.meal-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.meal-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 16px;
+  align-items: center;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.meal-item:last-child {
+  border-bottom: none;
+}
+
+.meal-item-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meal-item-name {
+  font-weight: 600;
+}
+
+.meal-item-meta {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+
+.meal-item-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  font-size: 10px;
+  background: var(--forest-soft);
+  color: var(--forest);
+  padding: 2px 7px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.meal-item-macros {
+  display: flex;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.btn-delete {
+  background: transparent;
+  border: 1px solid var(--line-soft);
+  color: var(--rust);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn-delete:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.page-indicator {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------
+   Nutrition label (signature element)
+--------------------------------------------------------- */
+.nutrition-label {
+  padding: 18px 20px 20px;
+}
+
+.nl-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.nl-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.nl-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  margin: 2px 0 2px;
+  color: var(--ink);
+}
+
+.nl-date {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.nl-rule-thick {
+  height: 6px;
+  background: var(--line);
+  margin: 10px 0 12px;
+}
+
+.nl-rule-thin {
+  height: 1px;
+  background: var(--line-soft);
+  margin: 12px 0;
+}
+
+.nl-calories {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.nl-calories-value {
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 1;
+  color: var(--forest);
+}
+
+.nl-calories-unit {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.progress-track {
+  height: 10px;
+  background: var(--line-soft);
+  border-radius: 999px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--amber);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.progress-fill.progress-over {
+  background: var(--rust);
+}
+
+.nl-remaining {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
+
+.nl-macros {
+  margin: 0;
+}
+
+.nl-macro-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-size: 14px;
+}
+
+.nl-macro-row dt {
+  color: var(--ink-soft);
+}
+
+.nl-macro-row dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.nl-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.nl-tags {
+  font-family: var(--font-mono);
+}
+
+/* ---------------------------------------------------------
+   Trends chart
+--------------------------------------------------------- */
+.trends-svg {
+  width: 100%;
+  height: 200px;
+  display: block;
+}
+
+.trend-bar {
+  fill: var(--forest);
+}
+
+.trend-bar-over {
+  fill: var(--rust);
+}
+
+.trend-bar-selected {
+  fill: var(--amber);
+}
+
+.trend-bar-group:hover .trend-bar {
+  opacity: 0.85;
+}
+
+.trend-label {
+  font-size: 9px;
+  fill: var(--muted);
+  font-family: var(--font-mono);
+}
+
+.trends-legend {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.legend-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--forest);
+  margin-right: 4px;
+}
+
+.legend-swatch-over {
+  background: var(--rust);
+}
+
+.trends-hint {
+  margin-left: auto;
+  font-style: italic;
+}
+
+.trends-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid var(--line-soft);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.field {
+  min-width: 0;
+}
+
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 17, 17, 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+.modal-box {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 40px rgba(17, 17, 17, 0.25);
+  padding: 24px;
+  width: 100%;
+  max-width: 340px;
+  text-align: center;
+}
+
+.modal-title {
+  margin: 0 0 8px;
+  font-size: 17px;
+  color: var(--ink);
+}
+
+.modal-message {
+  margin: 0 0 20px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn-confirm-yes,
+.btn-confirm-no {
+  border: 1px solid var(--line-soft);
+  border-radius: 4px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--surface);
+  min-width: 90px;
+}
+
+.btn-confirm-yes {
+  background: var(--rust);
+  border-color: var(--rust);
+  color: #fff;
+}
+
+.btn-confirm-no {
+  color: var(--ink-soft);
+}
+
+.btn-confirm-yes:disabled,
+.btn-confirm-no:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+.spinner-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px 8px;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--line-soft);
+  border-top-color: var(--forest);
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.7s linear infinite;
+}
+
+.spinner-label {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
